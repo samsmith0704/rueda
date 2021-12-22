@@ -1,4 +1,4 @@
-const moves = [
+const movesOnOne = [
   "Sombrero",
   "Enchufe Nueva York",
   "Enchufe doble",
@@ -12,7 +12,7 @@ const moves = [
   "Matala",
 ];
 
-export default moves;
+export default movesOnOne;
 
 // Un fly = called on 5
 // Fly doble = called on 5
