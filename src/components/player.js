@@ -1,6 +1,11 @@
 import React from "react";
 import movesOnOne from "../helpers/calls";
 
+/**
+ * TODO: add input validation
+ */
+
+const textAlign = { textAlign: "center" };
 const Player = () => {
   const [isPlaying, setIsPlaying] = React.useState(false);
   const [metronomeInterval, setMetronomeInterval] = React.useState(null);
@@ -20,9 +25,14 @@ const Player = () => {
   };
 
   React.useEffect(() => {
-    let lstCopy = [...moveList];
-    lstCopy.push(movesOnOne[0]);
-    setMoveList(lstCopy);
+    if (count > 0 && count % 8 === 0) {
+      let lstCopy = [...moveList];
+      let index = Math.floor(Math.random() * movesOnOne.length);
+
+      lstCopy.push(movesOnOne[index]);
+
+      setMoveList(lstCopy);
+    }
   }, [count]);
 
   const onPlay = () => {
@@ -35,39 +45,44 @@ const Player = () => {
   };
 
   return (
-    <div>
-      <button
-        onClick={() => {
-          onPlay();
-        }}
-        disabled={isPlaying}
-      >
-        Play
-      </button>
-
-      <button
-        onClick={() => {
-          setIsPlaying(!isPlaying);
-          clearInterval(metronomeInterval);
-          setCount(0);
-          setMoveList([]);
-        }}
-        disabled={!isPlaying}
-      >
-        Stop
-      </button>
+    <div style={textAlign}>
+      <h1 className="display-3">Rueda Caller</h1>
+      <div>
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            onPlay();
+          }}
+          disabled={isPlaying}
+        >
+          Play
+        </button>
+        <button
+          className="btn btn-danger"
+          onClick={() => {
+            setIsPlaying(!isPlaying);
+            clearInterval(metronomeInterval);
+            setCount(0);
+            setMoveList([]);
+          }}
+          disabled={!isPlaying}
+        >
+          Stop
+        </button>
+      </div>
+      <br />
+      <div>
+        <i>Current Count: {count}</i>
+      </div>
+      <br />
+      <input id="bpmInput" type="text" placeholder="Enter BPM..." />
       <br />
       <br />
-      <input
-        id="bpmInput"
-        type="text"
-        placeholder="Enter your desired BPM..."
-      />
-
-      {count}
-      <ul>
+      <ul className="list-group">
         {moveList.map((move) => {
-          return <li>{move}</li>;
+          return (
+            <li className="list-group-item list-group-item-warning">{move}</li>
+          );
         })}
       </ul>
     </div>
